@@ -22,7 +22,9 @@ configMapGenerator:
     labels:
       grafana_dashboard: "1"
       app.kubernetes.io/component: monitoring
-- name: dashboards-static
+    annotations:
+      grafana_folder: "kubernetes"
+- name: dashboards-flux
   files:
   - static/flux-logs.json
   - static/flux-controlplane.json
@@ -31,3 +33,5 @@ configMapGenerator:
     labels:
       grafana_dashboard: "1"
       app.kubernetes.io/component: monitoring
+    annotations:
+      grafana_folder: "flux"
