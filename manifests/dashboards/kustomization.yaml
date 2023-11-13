@@ -1,0 +1,33 @@
+configMapGenerator:
+- name: dashboards-generated
+  files:
+  - generated/pod-total.json
+  - generated/proxy.json
+  - generated/k8s-resources-pod.json
+  - generated/namespace-by-workload.json
+  - generated/controller-manager.json
+  - generated/cluster-total.json
+  - generated/k8s-resources-node.json
+  - generated/k8s-resources-cluster.json
+  - generated/k8s-resources-workload.json
+  - generated/kubelet.json
+  - generated/apiserver.json
+  - generated/k8s-resources-workloads-namespace.json
+  - generated/namespace-by-pod.json
+  - generated/workload-total.json
+  - generated/k8s-resources-namespace.json
+  - generated/persistentvolumesusage.json
+  - generated/scheduler.json
+  options:
+    labels:
+      grafana_dashboard: "1"
+      app.kubernetes.io/component: monitoring
+- name: dashboards-static
+  files:
+  - static/flux-logs.json
+  - static/flux-controlplane.json
+  - static/flux-cluster.json
+  options:
+    labels:
+      grafana_dashboard: "1"
+      app.kubernetes.io/component: monitoring

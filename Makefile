@@ -3,13 +3,14 @@ USERID=$(shell id -u ${USER})
 GROUPID=$(shell id -g ${USER})
 BUILDIMAGE=dashboards-build-tools:local
 DOCKERCMD=docker run -u ${USERID}:${GROUPID} -it -v ${PWD}:/app ${BUILDIMAGE}
-DASHBOARD_OUT=files/dashboards
+DASHBOARD_OUT=manifests/dashboards/generated
 
 .PHONY: all clean init generate buildtools
 
 generate: buildtools init
-	mkdir -p files/dashboards
-	@${DOCKERCMD} jsonnet -J vendor -m files/dashboards -e '(import "mixin.libsonnet").grafanaDashboards'
+	mkdir -p ${DASHBOARD_OUT}
+	@${DOCKERCMD} jsonnet -J vendor -m ${DASHBOARD_OUT} -e '(import "mixin.libsonnet").grafanaDashboards'
+	@./hacks/generate-dashboard-kustomize.sh	
 
 buildtools:
 	docker build -t ${BUILDIMAGE} -f Dockerfile .
@@ -20,3 +21,4 @@ init: buildtools
 clean:
 	git clean -Xfd .
 	docker rmi ${BUILDIMAGE}
+	rm -R ${DASHBOARD_OUT} manifests/dashboards/kustomization.yaml
