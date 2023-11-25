@@ -35,3 +35,16 @@ configMapGenerator:
       app.kubernetes.io/component: monitoring
     annotations:
       grafana_folder: "flux"
+- name: dashboards-istio
+  files:
+  - static/istio-mesh.json
+  - static/istio-service.json
+  - static/istio-performance.json
+  - static/istio-worload.json
+  - static/istio-control-plane.json
+  options:
+    labels:
+      grafana_dashboard: "1"
+      app.kubernetes.io/component: monitoring
+    annotations:
+      grafana_folder: "istio"
